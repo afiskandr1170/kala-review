@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Produk</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #fdf6f0;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        input, select {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ff9a9e;
+            border-radius: 10px;
+            width: 100%;
+            outline: none;
+        }
+
+        /* Product List */
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .product-item {
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+        .product-item:hover {
+            transform: scale(1.02);
+        }
+        .product-info h3 {
+            font-size: 18px;
+            margin: 0 0 5px 0;
+        }
+        .product-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        /* Button */
+        .buy-button {
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 12px 0;
+            margin-top: 10px;
+            border-radius: 25px;
+            width: 100%;
+            display: block;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            box-shadow: 2px 4px 6px rgba(255, 117, 140, 0.3);
+            transition: all 0.3s ease;
+        }
+        .buy-button:hover {
+            background: linear-gradient(135deg, #ff5c83, #ff6fa2);
+            transform: scale(1.05);
+        }
+
+        /* Rating */
+        .rating {
+            font-size: 16px;
+            color: #ffba08;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+            }
+            .product-item {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>E-Commerce Mobile</h1>
+    
+    <!-- Search & Sorting -->
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Cari produk..." oninput="filterProducts()">
+        <select id="sortSelect" onchange="sortProducts()">
+            <option value="no">Urutkan: No</option>
+            <option value="rating">Urutkan: Rating</option>
+        </select>
+    </div>
+
+    <!-- Product List -->
+    <div class="product-list" id="productList">
+        <div class="product-item" data-no="1" data-name="COZYOU - Natalia Pashmina" data-rating="5">
+            <div class="product-info">
+                <h3>1. COZYOU - Natalia Pashmina</h3>
+                <p>Harga: <strong>Rp 31.900</strong></p>
+                <p class="rating">★★★★★</p>
+            </div>
+            <a class="buy-button" href="https://s.shopee.co.id/AA2btpJyHm?share_channel_code=2" target="_blank">Beli Sekarang</a>
+        </div>
+
+        <div class="product-item" data-no="2" data-name="RICHDEPT Lexa Shirt" data-rating="4.8">
+            <div class="product-info">
+                <h3>2. RICHDEPT Lexa Shirt</h3>
+                <p>Harga: <strong>Rp 58.900</strong></p>
+                <p class="rating">★★★★⯪</p>
+            </div>
+            <a class="buy-button" href="https://s.shopee.co.id/AUfSVVLgpR?share_channel_code=2" target="_blank">Beli Sekarang</a>
+        </div>
+
+        <div class="product-item" data-no="3" data-name="Zoya Scarf Premium" data-rating="4.3">
+            <div class="product-info">
+                <h3>3. Zoya Scarf Premium</h3>
+                <p>Harga: <strong>Rp 45.000</strong></p>
+                <p class="rating">★★★★☆</p>
+            </div>
+            <a class="buy-button" href="https://s.shopee.co.id/XXX" target="_blank">Beli Sekarang</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function filterProducts() {
+        const query = document.getElementById("searchInput").value.toLowerCase();
+        const products = document.querySelectorAll(".product-item");
+        products.forEach(product => {
+            const name = product.getAttribute("data-name").toLowerCase();
+            product.style.display = name.includes(query) ? "block" : "none";
+        });
+    }
+
+    function sortProducts() {
+        const sortBy = document.getElementById("sortSelect").value;
+        const productList = document.getElementById("productList");
+        const products = Array.from(productList.children);
+        
+        products.sort((a, b) => {
+            if (sortBy === "no") {
+                return a.getAttribute("data-no") - b.getAttribute("data-no");
+            } else if (sortBy === "rating") {
+                return b.getAttribute("data-rating") - a.getAttribute("data-rating");
+            }
+        });
+
+        products.forEach(product => productList.appendChild(product));
+    }
+</script>
+
+</body>
+</html>
